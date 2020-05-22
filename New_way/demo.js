@@ -46,12 +46,15 @@ console.log(reducedData);
 
 var selection = parent.selectAll("div.demo-box");
 selection.data(reducedData)
-  .join('div');
+  .join('div')
+    .style("height", d => d + "px")
+    .style("background-color", color(iteration++));
 
 /**
  * 4. Updating existing data
  */
-var updatedData = reducedData;
+
+var updatedData = [80, 100, 120];
 console.log(updatedData);
 
 var selection = parent.selectAll("div.demo-box");
