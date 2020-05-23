@@ -1,4 +1,4 @@
-var colors = ['red', 'green', 'blue', 'cyan', 'magenta', 'yellow'];
+var colors = ['red', 'green', 'blue', 'cyan', 'magenta', 'orange', 'brown', 'darkcyan'];
 function color(i) {
   return colors[i % colors.length];
 }
@@ -16,13 +16,15 @@ var parent = d3.select("#content");
  */
 
 var initialData = [30, 40, 50];
+console.log(initialData);
 
 var selection = parent.selectAll("div.demo-box");
 selection.data(initialData)
   .join('div')
     .classed("demo-box", true)
+    .style("background-color", color(iteration++))
     .style("height", d => d + "px")
-    .style("background-color", color(iteration++));
+    .text(d => d);
 
 /**
  * 2. Appending data
@@ -35,8 +37,9 @@ var selection = parent.selectAll("div.demo-box");
 selection.data(extendedData)
   .join('div')
     .classed("demo-box", true)
+    .style("background-color", color(iteration++))
     .style("height", d => d + "px")
-    .style("background-color", color(iteration++));
+    .text(d => d);
 
 /**
  * 3. Removing data
@@ -47,8 +50,15 @@ console.log(reducedData);
 var selection = parent.selectAll("div.demo-box");
 selection.data(reducedData)
   .join('div')
-    .style("height", d => d + "px")
-    .style("background-color", color(iteration++));
+  .style("background-color", color(iteration++))
+  .style("height", d => d + "px")
+  .text(d => d);
+
+// Alternative variant: value as a key
+//   - removes correct elements
+//   - doesn't require re-styling (updating)
+// selection.data(reducedData, d => d)
+//   .join('div');
 
 /**
  * 4. Updating existing data
@@ -60,8 +70,9 @@ console.log(updatedData);
 var selection = parent.selectAll("div.demo-box");
 selection.data(updatedData)
   .join('div')
+    .style("background-color", color(iteration++))
     .style("height", d => d + "px")
-    .style("background-color", color(iteration++));
+    .text(d => d);
 
 /**
  * 5. Combining all operations together
@@ -72,16 +83,17 @@ function renderBars(newData) {
     .data(newData)
     .join('div')
       .classed("demo-box", true)
+      .style("background-color", color(iteration++))
       .style("height", d => d + "px")
-      .style("background-color", color(iteration++));
+      .text(d => d);
 
 }
 
 // Update
-renderBars([10, 20, 30]);
+renderBars([20, 40, 60]);
 
 // Append
-renderBars([40, 50, 10, 20, 30]);
+renderBars([20, 40, 60, 30, 100]);
 
 // Delete
 renderBars([]);
@@ -90,4 +102,4 @@ renderBars([]);
 renderBars([90, 80, 70, 60, 50, 40, 30]);
 
 // Delete from random positions of the array
-renderBars([90, 80, 60, 40, 30, 100]);
+renderBars([90, 80, 60, 40, 30]);
